@@ -1,0 +1,51 @@
+Purpose:
+
+Build a Monte Carlo simulation for estimating the probability of running out of money in retirement.  Treat years in retirement as a key uncertainity and use historical stock, bond, and inflation data to capture the observed cyclicity and dependency of thes variables.
+
+
+*********** Monte Carlo Simulation **********************
+Monte Carlo simulation is a mathematical technique that uses random sampling to estimate the probability distributions of uncertain outcomes. It is often used to model systems that are too complex to be solved analytically due to randomness or uncertainty in the input parameters.
+
+
+********** Key Features of Monte Carlo Simulation: *******************
+Random Sampling: Monte Carlo simulations rely on random sampling to generate possible values for uncertain variables. This allows you to model a range of possible outcomes instead of just one.
+
+
+************* Probabilistic Modeling: ************************
+The method is designed to handle inputs with uncertainty by assigning probability distributions to those inputs (e.g., normal, uniform, or exponential distributions). Each run of the simulation provides a potential outcome based on random sampling from these distributions.
+
+
+************* Repetition of Simulations: *********************
+By performing the simulation many times (often thousands or millions of iterations), Monte Carlo methods generate a comprehensive view of the possible outcomes, allowing for robust statistical analysis (e.g., mean, standard deviation, or confidence intervals).
+
+
+**************** Result Interpretation: *************************
+After running the simulation, you get a probability distribution of outcomes. This helps in estimating the likelihood of different results and understanding the risks involved in a decision or process.
+
+
+****************** Where it's Used: **************************
+Finance: To estimate the risk and uncertainty in stock prices, portfolios, or derivatives.
+
+Project Management: To assess the likelihood of meeting deadlines or staying within a budget.
+
+Engineering: For reliability analysis, cost estimation, or optimization in complex systems.
+
+Science and Research: In fields like physics, chemistry, and biology, to simulate complex phenomena that involve randomness (e.g., particle motion, genetics).
+
+
+*************** Steps in a Monte Carlo Simulation: *********************
+Define the Problem: Identify the process or system you want to model, and understand the uncertainty in the inputs.
+
+Assign Probability Distributions: For each uncertain variable, assign a probability distribution that reflects its possible values.
+
+Random Sampling: Use random numbers to sample values from the distributions of the input variables.
+
+Simulate: Run the simulation, often thousands of times, by recalculating the outcome using different sets of random inputs.
+
+Analyze Results: Aggregate the results and analyze the distribution of the outcomes to estimate probabilities and make informed decisions.
+
+
+******************** Example: **************************
+In finance, if you're trying to estimate the future value of an investment, the Monte Carlo method might simulate thousands of different future scenarios based on varying interest rates, inflation, or stock market fluctuations. The final output would be a distribution of possible future values, which can be used to make informed decisions about risk.
+
+Monte Carlo simulations are widely used because they can model and quantify uncertainty in complex systems.
