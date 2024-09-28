@@ -1,0 +1,91 @@
+**********************  HIGH LEVEL METRICS *****************************************************
+
+To develop your Monte Carlo Simulation (MCS) and financial planning app to production-level quality, hosted on Heroku, you’ll need a combination of technologies for handling the backend, frontend, security, and data management. Since you are already familiar with Flask, here's an outline of the stack you could use, along with alternatives and additional technologies you might need.
+
+1. Backend Framework
+    Flask: Since you are comfortable with Flask, it's a solid choice. It’s lightweight, easy to scale, and has plenty of libraries and extensions for handling authentication, database interaction, and security.
+    
+    Alternative: Django. It’s a heavier framework than Flask and comes with many features out of the box, such as user authentication, admin dashboards, and ORM for database management. It might speed up your development if you want a lot of functionality built in, though it's less flexible than Flask.
+
+2. Authentication and Security
+    Flask-Security-Too: Provides simple tools for authentication, registration, password reset, and roles. You can integrate two-factor authentication with this.
+
+    Flask-JWT-Extended: If you prefer token-based authentication, this will help handle JSON Web Tokens (JWT).
+
+    Flask-Talisman: Secures your app by setting HTTP headers that prevent XSS, clickjacking, and enforce HTTPS.
+    Two-Factor Authentication: You can use services like Twilio for SMS-based two-factor authentication or Authy and Google Authenticator for app-based 2FA.
+
+3. Database
+    PostgreSQL: Highly recommended for production environments on Heroku. Flask works well with SQLAlchemy as the ORM to interact with a PostgreSQL database.
+
+    Flask-SQLAlchemy: Extension that simplifies SQLAlchemy integration into Flask.
+
+    Alternatives:
+        MySQL: Another robust option.
+        SQLite: Good for initial development or small-scale apps, but not ideal for production.
+        NoSQL options: If you prefer a NoSQL solution, MongoDB could be used with Flask-PyMongo.
+        
+4. User Input & Form Handling
+    WTForms: For form handling and validation in Flask, Flask-WTF is a great extension that builds on WTForms.
+    Alternative: Django Forms if you go with Django, which also makes form validation easy.
+
+5. Frontend/UI
+    Flask-Bootstrap: Provides Bootstrap integration for Flask, which simplifies designing the frontend.
+    
+    JavaScript Frameworks: If you want a more dynamic dashboard experience:
+    
+    React.js: Popular for building interactive user interfaces and could be used to develop a more dynamic, real-time dashboard.
+    Vue.js or Angular: Alternatives to React that are also capable of building dynamic UIs.
+    Charting Libraries: Since you’ll have financial data visualizations:
+    
+    Plotly.js: Great for creating interactive, high-quality financial charts and visualizations.
+    
+    Chart.js: Another popular charting library, easy to use with Flask.
+    
+    Flask-Admin: If you want to add administrative dashboards easily, this is a good choice for quickly setting up CRUD interfaces for your data.
+
+6. Monte Carlo Simulation (MCS) and Financial Planning Logic
+    This is where you will leverage Python for your core business logic. Flask will handle the communication between your frontend and the simulation logic, ensuring user inputs are processed correctly, and results are displayed on the dashboard.
+    For performance scaling in production:
+        Consider using NumPy and Pandas for efficient numerical computations and data handling in your MCS.
+        For more complex modeling, tools like SciPy or PyMC3 could help.
+
+7. Task Queuing / Background Processing
+    Celery: If some calculations take longer or need to run asynchronously, you can use Celery for background tasks. It works well with Flask and can be used for email notifications, long-running calculations, etc.
+    
+    Redis: Often paired with Celery to handle background task queuing.
+
+8. File Storage
+    Amazon S3: If your application requires storing files (e.g., user reports), S3 is a great option. There are libraries like Flask-S3 that make this integration easier.
+
+    Alternatives: Google Cloud Storage or Azure Blob Storage.
+
+9. Hosting on Heroku
+    Heroku Postgres: For PostgreSQL database management on Heroku.
+    Heroku Redis: For background task management with Celery.
+    Gunicorn: A WSGI HTTP server recommended for serving your Flask app in production on Heroku.
+    Whitenoise: To serve static files efficiently on Heroku.
+
+10. DevOps / CI/CD
+    GitHub Actions / CircleCI / TravisCI: For continuous integration and deployment pipelines.
+    Docker: Consider containerizing your app to ensure consistency across different environments, especially as you deploy to production.
+
+11. Monitoring and Logging
+    Sentry: For error tracking and monitoring, Sentry works well with Flask and can alert you to issues in production.
+    Papertrail or LogDNA: For logging and monitoring your application in production.
+
+12. Testing
+    pytest: Essential for unit and integration testing your Python code, including the MCS logic and the financial planner.
+    Flask-Testing: Offers utilities to test Flask applications, including mock request contexts and more.
+    Selenium / Cypress: For end-to-end testing of your frontend, especially if you're using a more dynamic JavaScript-based dashboard.
+
+Suggested Architecture:
+    Frontend: HTML/CSS with Bootstrap or a JavaScript framework like React or Vue.js for a more interactive UI.
+    Backend: Flask or Django for the API, business logic, and form handling.
+    Database: PostgreSQL with SQLAlchemy (Flask) or the built-in ORM (Django).
+    Asynchronous Tasks: Celery + Redis for background processing of heavy tasks.
+    Authentication: Flask-Security, JWT, and 2FA with services like Twilio.
+    Deployment: Heroku with Postgres, Redis, S3, and possibly Docker for easier deployment and scaling.
+
+Conclusion:
+    With Flask, combined with the additional technologies listed, you can build a secure, scalable, and efficient application for simulating Monte Carlo scenarios, managing financial data, and building dashboards. Flask’s flexibility gives you room to integrate the necessary authentication, visualization, and scaling tools, while Heroku provides an excellent platform for deploying your app to production.

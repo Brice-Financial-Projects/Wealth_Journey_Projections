@@ -1,4 +1,4 @@
-
+*************************  PSUEDOCODE  ******************************************
 
 1.      Get user input for investment type (all stocks, all bonds, or a blend)
 2.      Map investment type choice to a list of historical returns
@@ -44,4 +44,3 @@
                 - Scale to create a dashboard to include the following:
                         - Retirement NestEgg Simulator
                         - Personal Finance App (See: D:\computerScienceCopy\USFSoftwareEngineerBootcamp\4_Capstone\Overview)
-
