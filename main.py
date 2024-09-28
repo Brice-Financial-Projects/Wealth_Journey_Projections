@@ -188,6 +188,38 @@ def montecarlo (returns):
                 case_count += 1
         return outcome, bankrupt_count
     
+def bankrupt_prob(outcome, bankrupt_count):
+    """
+    Calculate and return the chance of running out of money and other stats.
 
+    Args:
+        outcome (list or array-like): Final investment outcomes from the 
+                                      simulations.
+        bankrupt_count (int): Number of times the investment went below the 
+                              bankruptcy threshold.
+
+    Returns:
+        dict: A dictionary with:
+            - 'chance_of_bankruptcy' (float): Probability of running out of 
+              money (as a percentage).
+            - 'mean_final_value' (float): Average final investment value.
+            - 'median_final_value' (float): Median final investment value.
+            - 'max_final_value' (float): Highest final investment value.
+            - 'min_final_value' (float): Lowest final investment value.
+    """
+    total = len(outcome)
+    odds = round(100 * bankrupt_count / total, 1)
     
+    print("\nInvestment type: {}".format(invest_type))
+    print("Starting value: ${:,}".format(int(start_value)))
+    print("Annual Withdrawal: ${:,}".format(int(withdrawal)))
+    print("Years in retirement (min-most_likely-max): {}-{}-{}"
+          .format(min_years, most_likely_years, max_years))
+    print("Number of runs: {:,}\n".format(len(outcome)))
+    print("Odds of running out of money: {}%\n".format(odds))
+    print("Average outcome: ${:,}".format(int(sum(outcome) / total)))
+    print("Minimum outcome: ${:,}".format(min(i for i in outcome)))
+    print("Maximum outcome: ${:,}".format(max(i for i in outcome)))
+
+    return odds
 
