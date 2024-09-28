@@ -235,4 +235,16 @@ def main():
                figsize=(16, 5)) # size is width, height in inches
     index = [i + 1 for i in range(len(plotdata))]
     plt.bar(index, plotdata, color='black')
+    plt.xlabel('Simulated Lives', fontsize=18)
+    plt.ylabel('$ Remaining', fontsize=18)
+    plt.ticklabel_format(style='plain', axis='y')
+    ax = plt.gca()
+    ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x: "{:,}"
+                                                         .format(int(x))))
+    plt.title('Probability of running out of money = {}%'.format(odds), 
+              fontsize=20, color='red')
+    plt.show()
     
+# run program
+if __name__ == '__main__':
+    main()
