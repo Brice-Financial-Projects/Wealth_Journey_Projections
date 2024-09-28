@@ -120,8 +120,7 @@ if not int(min_years) < int(most_likely_years) < int(max_years) \
         print("Requires Min < Most Likely < Max with Max <= 99.", file=sys.stderr)
         sys.exit(1)
 
-def montecarlo (returns, initial_investment, periods, simulations,
-                               bankruptcy_threshold=0):
+def montecarlo (returns):
     """
     Run a Monte Carlo Simulation (MCS) to simulate investment growth over time.
     
@@ -150,7 +149,7 @@ def montecarlo (returns, initial_investment, periods, simulations,
     outcome = []
     
     while case_count < int(num_cases):
-        initial_investment = int(start_value)
+        investments = int(start_value)
         start_year = random.randrange(0, len(returns))
         duration = int(random.triangular(int(min_years), int(max_years), 
             int(most_likely_years)))
@@ -164,6 +163,31 @@ def montecarlo (returns, initial_investment, periods, simulations,
         for i in lifespan:
             lifespan_returns.append(returns[i % len(returns)])
             lifespan_infl.append(infl_rate[i % len(infl_rate)])
+        
+        # loop through each year of retirement for each case run
+        for index, i in enumerate(lifespan_returns):
+            infl = lifespan_infl[index]
             
+            # do not adjust for inflation the first year
+            if index == 0:
+                withdrawal_infl_adj = int(withdrawal)
+            else:
+                withdrawal_infl_adj = int(withdrawal_infl_adj * (1 + infl))
+            
+            investments -= withdrawal_infl_adj
+            investments = int(investments * (1 + i))
+            
+            if investments <= 0:
+                bankrupt = 'yes'
+                break
+            
+            if bankrupt == 'yes':
+                outcome.append(0)
+                bankrupt_count += 1
+            else:
+                case_count += 1
+        return outcome, bankrupt_count
+    
+
     
 
