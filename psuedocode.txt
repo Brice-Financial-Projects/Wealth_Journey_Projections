@@ -1,0 +1,47 @@
+
+
+1.      Get user input for investment type (all stocks, all bonds, or a blend)
+2.      Map investment type choice to a list of historical returns
+2a.         Use text files provided to produce Minimum Viable Product (MVP), then go to "2b" to enhance.
+2b.         Use an API for the historical data 
+                API: https://marketstack.com/
+3.      Get user input for the starting value of investments
+4.      Get user input for the initial yearly withdrawal amount
+5.      Get user input for the minimum, most likely, and maximum duration of retirement
+6.      Get user input on number of cases to run
+7.      Start list to hold outcomes
+8.      Loop through cases:
+            For each case:
+                Extract random contiguous sample of returns list for duration period
+                Extract same interval from inflation list 
+                    (API for inflation: https://fred.stlouisfed.org/docs/api/fred/)
+                For each year in sample:
+                    If year not equal to year 1:
+                        Adjust withdrawal for inlation
+                    Subtract withdrawal from investments
+                    Adjust investment for returns
+                    If investments <= 0:
+                        Investments = 0
+                        Break
+            Append investments value to outcomes list
+        Display input parameters
+        Calculate and display the probability of ruin
+        Calculate and display statistics
+        Display a subset of outcomes as a bar chart
+
+
+9.      Deployment:
+            Will require user login and authentication, database storage of user inputs
+            therefore, deployment will need production level security.
+
+            Use Heroku for deployment.
+
+10.     Scalability:
+            This could turn into Capstone project.  
+                - Use API calls for financial information
+                - Create User Auth and Login
+                - Create DB of User inputs
+                - Scale to create a dashboard to include the following:
+                        - Retirement NestEgg Simulator
+                        - Personal Finance App (See: D:\computerScienceCopy\USFSoftwareEngineerBootcamp\4_Capstone\Overview)
+
