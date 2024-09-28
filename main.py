@@ -86,33 +86,84 @@ while invest_type not in investment_type_args:
                         'as listed in prompt: ')
 
 start_value = default_input('Input starting value of investments: \n',  
-                            '2,000,000')
+                            '2_000_000')
 
 while not start_value.isdigit():
-    start_value = input('Invalid input! Input integer only: ')
+    start_value = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
     
 withdrawal = default_input('Input annual pre-tax withdrawal' \
     " (today's $): \n", "80,000")
 while not withdrawal.isdigit():
-    withdrawal = input('Invalid input! Input integer only: ')
+    withdrawal = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
     
 min_years = default_input('Input minimum years in retirement: \n', '18')
 while not min_years.isdigit():
-    min_years = input('Invalid input! Input integer only: ')
+    min_years = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
     
-most_likely_years = default_input('Input most-likely years in retirement: \n', '25')
+most_likely_years = default_input('Input most-likely years in retirement: \n',\
+    '25')
 while not most_likely_years.isdigit():
-    most_likely_years = input('Invalid input! Input integer only: ')
+    most_likely_years = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
     
 max_years = default_input('Input maximum years in retirement: \n', '40')
 while not max_years.isdigit():
-    max_years = input('Invalid input! Input integer only: ')
+    max_years = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
     
-num_cases = default_input('Input number of cases to run: \n', '50,000')
+num_cases = default_input('Input number of cases to run: \n', '50_000')
 while not num_cases.isdigit():
-    num_cases = input('Invalid input! Input integer only: ')
+    num_cases = input('Invalid input! Input integer only (do NOT include symbols or commas):  ')
 
+# chek for other erroneous input
+if not int(min_years) < int(most_likely_years) < int(max_years) \
+    or int(max_years) > 99:
+        print("\nProblem with input years.", file=sys.stderr)
+        print("Requires Min < Most Likely < Max with Max <= 99.", file=sys.stderr)
+        sys.exit(1)
 
+def montecarlo (returns, initial_investment, periods, simulations,
+                               bankruptcy_threshold=0):
+    """
+    Run a Monte Carlo Simulation (MCS) to simulate investment growth over time.
     
+    Calculate the final investment value and count bankruptcies (investment 
+    value falls below the bankruptcy threshold).
+
+    Args:
+        returns (list or array-like): Potential returns for each period, such 
+                                      as historical or expected returns.
+        initial_investment (float): The starting investment value.
+        periods (int): Number of periods to simulate (e.g., years or months).
+        simulations (int): The number of Monte Carlo simulations to run.
+        bankruptcy_threshold (float, optional): Threshold below which the 
+                                                investment is considered 
+                                                bankrupt. Defaults to 0.
+
+    Returns:
+        tuple:
+            - final_values (list): Final investment value at the end of the 
+              plan for each simulation.
+            - bankrupt_count (int): Number of simulations where the investment 
+              value fell below the bankruptcy threshold.
+    """
+    case_count = 0
+    bankrupt_count = 0
+    outcome = []
+    
+    while case_count < int(num_cases):
+        investments = int(start_value)
+        start_year = random.randrange(0, len(returns))
+        duration = int(random.triangular(int(min_years), int(max_years), 
+            int(most_likely_years)))
+        end_year = start_year + duration
+        lifespan = [i for i in range(start_year, end_year)]
+        bankrupt = 'no'
+        
+        # build temporary lists for each case
+        lifespan_returns = []
+        lifespan_infl = []
+        for i in lifespan:
+            lifespan_returns.append(returns[i % len(returns)])
+            lifespan_infl.append(infl_rate[i % len(infl_rate)])
+            
     
 
