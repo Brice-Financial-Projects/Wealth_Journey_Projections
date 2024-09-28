@@ -150,7 +150,7 @@ def montecarlo (returns, initial_investment, periods, simulations,
     outcome = []
     
     while case_count < int(num_cases):
-        investments = int(start_value)
+        initial_investment = int(start_value)
         start_year = random.randrange(0, len(returns))
         duration = int(random.triangular(int(min_years), int(max_years), 
             int(most_likely_years)))
