@@ -53,3 +53,46 @@ The script will guide you through several input prompts. These include:
     -   Number of cases (simulations) to run
 
 You can either enter values manually or press ENTER to use the default values provided.
+
+### 5. View the Results
+The results of the simulation will be printed to the terminal and a bar chart will be displayed, showing the distribution of outcomes based on the Monte Carlo simulations.
+
+## Example of Script Execution:
+
+Note: Input data should be in percent, NOT decimal form!
+
+   stocks = SP500
+    bonds = 10-yr Treasury Bond
+ sb_blend = 50% SP500 / 50% TBond
+sbc_blend = 40% SP500 / 50% TBond / 10% Cash
+
+Press ENTER to take default value shown in [brackets].
+
+Enter investment type: (stocks, bonds, sb_blend, sbc_blend): 
+[bonds]: sb_blend
+Input starting value of investments: 
+[2000000]: 
+Input annual pre-tax withdrawal (today's $): 
+[80000]: 
+Input minimum years in retirement: 
+[18]: 
+Input most-likely years in retirement: 
+[25]: 
+Input maximum years in retirement: 
+[40]: 
+Input number of cases to run: 
+[50000]: 
+
+After you enter your inputs, the program will simulate the outcomes based on the Monte Carlo simulations and output statistics like:
+
+Investment type: sb_blend
+Starting value: $2,000,000
+Annual Withdrawal: $80,000
+Years in retirement (min-most_likely-max): 18-25-40
+Number of runs: 50,000
+
+Odds of running out of money: 12.3%
+
+Average outcome: $523,456
+Minimum outcome: $0
+Maximum outcome: $4,750,897
