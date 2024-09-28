@@ -12,7 +12,7 @@ Developed in the VS Code editor.
 """
 
 import sys, random
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 def read_to_list(file_name):
@@ -223,3 +223,16 @@ def bankrupt_prob(outcome, bankrupt_count):
 
     return odds
 
+def main():
+    """
+    Call MCS and bankruptcy functions, then draw a bar chart of the results.
+    """
+    outcome, bankrupt_count = montecarlo(investment_type_args[invest_type])
+    odds = bankrupt_prob(outcome, bankrupt_count)
+    
+    plotdata = outcome[:3000] # only plot first 3000 runs
+    plt.figure('Outcome by Case (showing fir {} runs)'.format(len(plotdata)),
+               figsize=(16, 5)) # size is width, height in inches
+    index = [i + 1 for i in range(len(plotdata))]
+    plt.bar(index, plotdata, color='black')
+    
