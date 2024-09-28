@@ -14,14 +14,14 @@ You can install the necessary Python packages by running:
 ```bash
 pip install matplotlib
 
-
+```
 ## How to Use
 
 ### 1. Download or Clone the Repository
 
 Make sure that you have all the required files, including the script and the data files (described below).
 
-### 2. Place Data Files Correctly
+## 2. Place Data Files Correctly
 
 The input data files should be placed in the `text_files/data_files/` directory. These files contain historical percentage returns and must be in plain text format, with one percentage per line. The files required are:
 
@@ -36,11 +36,10 @@ Ensure that these files are located in the appropriate directory and contain val
 ### 3. Run the Script
 
 You can execute the script by opening your terminal or command prompt, navigating to the script's directory, and running:
-
-```bash (within the Virtual Environment)
+bash (within the Virtual Environment)
 python main.py
 
-```iPython
+iPython
 %run main.py
 
 ### 4. Follow the Prompts
