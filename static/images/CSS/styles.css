@@ -1,0 +1,174 @@
+.btn {
+    padding: .5rem;
+}
+
+
+button {
+    background-color: red;
+    color: blue;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5rem; /* Slightly smaller font size for better fit */
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow:
+    1px 1px 0 white,
+    -1px 1px 0 white,
+    1px -1px 0 white,
+    -1px -1px 0 white;
+    margin: 10px 0;
+  }
+  
+  button:hover {
+    background-color: blue;
+    transition: background-color 1s;
+  }
+
+  a:hover, .anchors a:hover {
+    color:blue;
+    font-size: 1.5rem;
+    transition: color, font-size 1s;
+  }
+
+  body {
+    background-color: rgba(39, 38, 38, 0.979);
+    width: 90%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 5rem;
+    
+  }
+
+  h1 {
+    color: white;
+    font-size: 3.2rem;
+
+  }
+
+  h2 {
+    color:white;
+    font-size: 2.5rem;
+  }
+  
+  h3, li {
+    color:white;
+    font-size: 1.8rem;
+  }
+
+  
+
+  p {
+    color:white;
+    font-size: 1.2rem;
+  }
+
+  a {
+    display:flex;
+    flex-direction:column;
+    color:white;
+    font-size: 1.2rem;
+  }
+
+  input {
+    color: white;
+    background-color: blue;
+    font-size: 1.5rem;
+  }
+
+  .container, .form_cont, .anchors, .img, .list, .content {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    text-align: center; /* Center text inside elements */
+
+}
+/*
+.content {
+  width: 70vw;
+  display:flex;
+  flex-direction: column;
+  text-align: center;
+}
+*/
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align all items to the start (left) */
+}
+
+form p {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+form label {
+  width: 150px; /* Fixed width for labels to align the input boxes */
+  text-align: right; /* Align text to the right within the label */
+  margin-right: 10px; /* Space between label and input */
+}
+
+form input {
+  width: 250px; /* Fixed width for input fields */
+}
+
+form button {
+  margin-top: 10px; /* Space above the button */
+  align-self: center; /* Center the button within the form */
+}
+
+
+
+.list li {
+    text-align: start;
+    font-size: 1.2rem;
+}
+
+.spell_cont, .comp_cont, .name_cont {
+  flex-direction: column;
+}
+
+.anchors {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  flex-direction: column;
+}
+
+.anchors a {
+    color: red;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+
+
+.heading {
+    text-align: center;
+}
+
+.navbar a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+
+.navbar {
+  background-color: black;
+  overflow: hidden;
+
+}
+
+.navbar a:hover {
+  background-color:rgb(202, 26, 26);
+  transition: .5s;
+}
+
+#main {
+  padding: 0;
+  margin: 0;
+}

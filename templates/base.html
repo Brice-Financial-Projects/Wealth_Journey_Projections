@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %} A financial retirement simulation model using the Monte Carlo Simulation methodology {% endblock %}">
+    <meta name="keywords" content="planning, wealth, projections, finance, finances, financial, retire, retirement, savings, nest-egg, nest egg, forecast model, simulation">
+    <meta name="robots" content="index, follow" >
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}Wealth Journey Projections{% endblock og_title %}" />
+    <meta property="og:description" content="{% block og_description %}A financial retirement simulation model using the Monte Carlo Simulation methodology!{% endblock og_description %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.url }}" />
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg') }}"/>
+    <meta property="og:image:alt" content="A Wealth Journey Projections application." />
+    <meta property="og:site_name" content="Wealth Journey Projections" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Choc_Lab_Lover" />
+    <meta name="twitter:title" content="{% block twitter_title %}Wealth Journey Projections{% endblock %}" />
+    <meta name="twitter:description" content="{% block twitter_description %}A financial retirement simulation model using the Monte Carlo Simulation methodology!{% endblock twitter_description%}" />
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/twitter-image.jpg') }}" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.url }}" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+
+    <!-- Tailwind Link -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+    <title>{% block title %} Wealth Journey Projection {% endblock %}</title>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
