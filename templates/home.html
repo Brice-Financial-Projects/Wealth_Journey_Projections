@@ -1,12 +1,92 @@
 {% extends "base.html" %} {%block title%} Wealth Journey Projections {% endblock title %}
 {% block meta_description %}A financial retirement simulation model using the Monte Carlo Simulation methodolgy!{% endblock meta_description %}
 
-<body>
+<div>
 {% block content %}
 
-<div class="flex flex-col items-center min-h-screen bg-purple-400">
-    <h1 class="text-4xl font-bold text-black pt-8">Welcome to our Wealth Journey Projections Web App</h1>
 
+<div class="flex flex-col items-center min-h-screen bg-purple-400">
+    <div class="flex flex-col items-center min-h-screen bg-purple-400 max-w-3xl mx-auto p-16">
+    <h1 class="text-4xl font-bold text-black pt-12">Welcome to our Wealth Journey Projections Web App</h1>
+    <h2 class="text-3xl font-bold text-black pt-8 self-start">Purpose:</h2>
+    <h3 class="text-2xl text-black pt-4">This application uses the Monte Carlo Simulation to model scenarios to project the probability of your retirement "Nest Egg" lasting through your Golden Years.</h3>
+    <h2 class="text-3xl font-bold text-black pt-8 self-start">Instructions:</h2>
+    <h3 class="text-2xl text-black pt-4">Below is a form asking for information.  Enter in the information and click submit.  Upon submittal, you will be redirected to a new page that renders the results of the calculation with a chart.  The form has placehold values that will be used if left blank.</h3>
+    <h3 class="text-2xl text-black pt-4">Any information provided in this form will only be used in the calculation.  None of the information entered will be saved.</h3>
+</div>
+
+<div id="retire-form" class="flex flex-col items-center min-h-screen bg-purple-400 max-w-3xl mx-auto p-12">
+    <section >
+        <h2 class="text-3xl font-bold text-black pt-8 self-start">Definitions:</h2> 
+        <h3 class="text-2xl text-black font-bold pt-4">Investment Type:</h3>
+        <ul class="text-xl text-black pt-4">
+            <li>Stocks = SP500</li>
+            <li>Bonds = 10-Year Treasury Bond</li>
+            <li>SB_Blend = 50% SP500 / 50% TBond</li>
+            <li>SBC_blend = 40% SP500 / 50% TBond / 10% Cash</li>
+        </ul>
+
+        <h3 class="text-2xl text-black font-bold pt-4">Other Terms:</h3>
+        <ul class="text-xl text-black pt-4">
+            <li><strong>Start Value</strong> = Dollar amount of your retirement fund</li>
+            <li><strong>Annual Withdrawal</strong> = Annual pre-tax withdraw in today's dollars</li>
+            <li><strong>Minimum Years in Retirement</strong> = The minimum amount of years to be using the retirement account</li>
+            <li><strong>Most Likely Years in Retirement</strong> = The anticipated greatest likelihood of the number of years to be using the retirement account</li>
+            <li><strong>Maximum Years in Retirement</strong> = The maximum number of years to be using the retirement account</li>
+            <li><strong>Number of Cases to Run in Model</strong> = The default is 50,000.  The simulation will run this number of simulations to determing the probabilities.  It is recommended to use the default value.</li>
+        </ul>
+    
+    <form class="w-full space-y-4 pt-8">
+<!-- Investment Type (Text Input) -->
+<div class="w-full">
+    <label for="investment-type" class="block text-xl font-bold text-black">Investment Type:</label>
+    <input type="text" id="investment-type" name="investment-type" placeholder="stocks, bonds, etc." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Start Value (Number Input) -->
+<div class="w-full">
+    <label for="start-value" class="block text-xl font-bold text-black">Start Value:</label>
+    <input type="number" id="start-value" name="start-value" placeholder="2000000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Annual Withdrawal (Number Input) -->
+<div class="w-full">
+    <label for="annual-withdrawal" class="block text-xl font-bold text-black">Annual Withdrawal:</label>
+    <input type="number" id="annual-withdrawal" name="annual-withdrawal" placeholder="80000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Minimum Years in Retirement (Number Input) -->
+<div class="w-full">
+    <label for="min-years" class="block text-xl font-bold text-black">Minimum Years in Retirement:</label>
+    <input type="number" id="min-years" name="min-years" placeholder="18" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Most Likely Years in Retirement (Number Input) -->
+<div class="w-full">
+    <label for="most-likely-years" class="block text-xl font-bold text-black">Most Likely Years in Retirement:</label>
+    <input type="number" id="most-likely-years" name="most-likely-years" placeholder="25" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Maximum Years in Retirement (Number Input) -->
+<div class="w-full">
+    <label for="max-years" class="block text-xl font-bold text-black">Maximum Years in Retirement:</label>
+    <input type="number" id="max-years" name="max-years" placeholder="40" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Number of Cases to Run (Number Input) -->
+<div class="w-full">
+    <label for="num-cases" class="block text-xl font-bold text-black">Number of Cases to Run in Model:</label>
+    <input type="number" id="num-cases" name="num-cases" placeholder="50000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+</div>
+
+<!-- Submit Button and Home Link -->
+<div class="w-full flex justify-between items-center">
+    <button type="submit" class="bg-purple-600 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">Submit</button>
+    <a href="#top" class="text-purple-700 text-2xl font-bold hover:underline">Home</a>
+</div>
+    </form>
+    </section>
+</div>
 </div>
 
 

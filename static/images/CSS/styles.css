@@ -1,3 +1,8 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/*
 .btn {
     padding: .5rem;
 }
@@ -10,7 +15,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.5rem; /* Slightly smaller font size for better fit */
+    font-size: 1.5rem; /* Slightly smaller font size for better fit *
     font-family: Arial, Helvetica, sans-serif;
     text-shadow:
     1px 1px 0 white,
@@ -78,8 +83,8 @@ button {
 
   .container, .form_cont, .anchors, .img, .list, .content {
     display: flex;
-    justify-content: center; /* Horizontal centering */
-    text-align: center; /* Center text inside elements */
+    justify-content: center; /* Horizontal centering *
+    text-align: center; /* Center text inside elements *
 
 }
 /*
@@ -89,12 +94,12 @@ button {
   flex-direction: column;
   text-align: center;
 }
-*/
+*
 
 form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align all items to the start (left) */
+  align-items: flex-start; /* Align all items to the start (left) *
 }
 
 form p {
@@ -104,18 +109,18 @@ form p {
 }
 
 form label {
-  width: 150px; /* Fixed width for labels to align the input boxes */
-  text-align: right; /* Align text to the right within the label */
-  margin-right: 10px; /* Space between label and input */
+  width: 150px; /* Fixed width for labels to align the input boxes *
+  text-align: right; /* Align text to the right within the label *
+  margin-right: 10px; /* Space between label and input *
 }
 
 form input {
-  width: 250px; /* Fixed width for input fields */
+  width: 250px; /* Fixed width for input fields *
 }
 
 form button {
-  margin-top: 10px; /* Space above the button */
-  align-self: center; /* Center the button within the form */
+  margin-top: 10px; /* Space above the button *
+  align-self: center; /* Center the button within the form *
 }
 
 
@@ -172,3 +177,4 @@ form button {
   padding: 0;
   margin: 0;
 }
+*/
