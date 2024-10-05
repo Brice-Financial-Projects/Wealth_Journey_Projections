@@ -15,6 +15,7 @@ import sys, random
 import matplotlib.pyplot as plt
 
 
+
 def read_to_list(file_name):
     """Open a file of data in percent, convert to decimal & return a list.
 
@@ -228,33 +229,40 @@ def main():
     """
     Call MCS and bankruptcy functions, then draw a bar chart of the results.
     """
-    outcome, bankrupt_count = montecarlo(investment_type_args[invest_type])
-    odds = bankrupt_prob(outcome, bankrupt_count)
-    
-    # Ensure that outcome has data to plot
-    if not outcome or len(outcome) == 0:
-        print("No valid data to plot.")
-        return
+    try:
+        outcome, bankrupt_count = montecarlo(investment_type_args[invest_type])
+        odds = bankrupt_prob(outcome, bankrupt_count)
+        
+        # Ensure that outcome has data to plot
+        if not outcome or len(outcome) == 0:
+            print("No valid data to plot.")
+            return
 
-    plotdata = outcome[:3000]  # only plot first 3000 runs
-    plt.figure('Outcome by Case (showing first {} runs)'.format(len(plotdata)),
-               figsize=(16, 5))  # size is width, height in inches
-    index = [i + 1 for i in range(len(plotdata))]
-    
-    # Only plot non-zero outcomes to improve clarity
-    plt.bar(index, plotdata, color='black')
-    
-    plt.xlabel('Simulated Lives', fontsize=18)
-    plt.ylabel('$ Remaining', fontsize=18)
-    plt.ticklabel_format(style='plain', axis='y')
-    
-    ax = plt.gca()
-    ax.get_yaxis().set_major_formatter(
-        plt.FuncFormatter(lambda x, _: "{:,}".format(int(x))))
-    
-    plt.title('Probability of running out of money = {}%'.format(odds),
-              fontsize=20, color='red')
-    plt.show()
+        plotdata = outcome[:3000]  # only plot first 3000 runs
+        plt.figure('Outcome by Case (showing first {} runs)'.format(len(plotdata)),
+                figsize=(16, 5))  # size is width, height in inches
+        index = [i + 1 for i in range(len(plotdata))]
+        
+        # Only plot non-zero outcomes to improve clarity
+        plt.bar(index, plotdata, color='black')
+        
+        plt.xlabel('Simulated Lives', fontsize=18)
+        plt.ylabel('$ Remaining', fontsize=18)
+        plt.ticklabel_format(style='plain', axis='y')
+        
+        ax = plt.gca()
+        ax.get_yaxis().set_major_formatter(
+            plt.FuncFormatter(lambda x, _: "{:,}".format(int(x))))
+        
+        plt.title('Probability of running out of money = {}%'.format(odds),
+                fontsize=20, color='red')
+        plt.show()
+        
+    except KeyboardInterrupt:
+        print("\nProgram interrupted! Cleaning up...")
+        # You could add more cleanup logic here if needed
+        plt.close('all')
+        sys.exit(0)
 
 
 # run program
