@@ -44,3 +44,7 @@
                 - Scale to create a dashboard to include the following:
                         - Retirement NestEgg Simulator
                         - Personal Finance App (See: D:\computerScienceCopy\USFSoftwareEngineerBootcamp\4_Capstone\Overview)
+
+
+
+from flask import Flask, jsonify\nimport random\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nimport time\nfrom io import BytesIO\nimport base64\n\napp = Flask(__name__)\n\n# Existing code\n\n@app.route('/')\ndef main():\n    # Simulate some processing\n    time.sleep(1)\n    return jsonify({\n        'message': 'App is running!',\n        'status': 'success'\n    })\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=8080)

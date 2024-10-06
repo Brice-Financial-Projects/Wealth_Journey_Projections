@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 # from flask_debugtoolbar import DebugToolbarExtension
 from dotenv import load_dotenv, find_dotenv
-from simulation import calculate_results, safe_int  # Import the simulation logic
+from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
 from config import DevelopmentConfig
 
@@ -60,4 +60,4 @@ def results():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
