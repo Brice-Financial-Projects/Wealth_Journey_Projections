@@ -5,6 +5,8 @@ from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
 from config import DevelopmentConfig
 
+# Force rebuild
+
 # Load environment variables from the .env file
 load_dotenv(find_dotenv())
 
