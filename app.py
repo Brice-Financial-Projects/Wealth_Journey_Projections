@@ -1,11 +1,10 @@
+import logging
 from flask import Flask, render_template, request
 # from flask_debugtoolbar import DebugToolbarExtension
 from dotenv import load_dotenv, find_dotenv
 from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
-from config import DevelopmentConfig
-
-# Force rebuild
+from config import ProductionConfig
 
 # Load environment variables from the .env file
 load_dotenv(find_dotenv())
@@ -13,17 +12,54 @@ load_dotenv(find_dotenv())
 app = Flask(__name__)
 
 # Call config files
-app.config.from_object(DevelopmentConfig)
+app.config.from_object(ProductionConfig)
+
+# Set up logging to match the configured log level
+logging.basicConfig(level=app.config['LOG_LEVEL'])
+
+# Set up a separate logger specifically for counting requests
+request_logger = logging.getLogger('request_count_logger')
+request_logger.setLevel(logging.INFO)  # This logger will only log INFO level for requests
+
+# Configure the handler for the request count logger
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# Ensure the formatter is consistent
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+
+# Add the handler to the request logger
+request_logger.addHandler(console_handler)
+request_logger.info("Logging system set up correctly.")
+
 
 # Initialize the debug toolbar
 # debug = DebugToolbarExtension(app)
+
+# Initialize a global counter (in memory, not persistent across restarts)
+counter = 0
+
+
+@app.before_request
+def count_requests():
+    global counter  # Ensure that 'counter' is accessed globally
+    if 'counter' in globals():  # Check if counter is defined globally
+        counter += 1
+    else:
+        counter = 1  # Set to 1 if for some reason the counter wasn't initialized
+    app.logger.setLevel(logging.INFO)  # Ensure INFO level is set
+    request_logger.setLevel(logging.INFO)  # Ensure request logger is logging at INFO level
+    request_logger.info(f"Request count (via logger): {counter}")
+
 
 @app.route('/')
 def home():
     """
     Render the homepage where users can input retirement parameters.
     """
-    return render_template('home.html')
+    return render_template('home.html', request_count=counter)
+
 
 @app.route('/results', methods=['POST'])
 def results():

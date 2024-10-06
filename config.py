@@ -11,7 +11,8 @@ class Config:
     """Base configuration."""
     SECRET_KEY = os.environ.get('SECRET KEY', 'default_secret_key')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    
+    # Set up default logging configuration
+    LOG_LEVEL = logging.WARNING  
     
 class DevelopmentConfig(Config):
     """Development configuration"""
@@ -19,18 +20,21 @@ class DevelopmentConfig(Config):
     DEBUG_TB_INTERCEPT_REDIRECTS = True # Setting this to True will pause form submittals
     FLASK_ENV = 'development'
     USE_RELOADER = True
+    LOG_LEVEL = logging.DEBUG
 
     
 class ProductionConfig(Config):
     """Production Configuration"""
     DEBUG = False
     FLASK_ENV = 'production'
+    LOG_LEVEL = logging.WARNING  # Log only warnings and above in production
     
 class TestingConfig(Config):
     """Testing configuration"""
     TESTING = True
     FLASK_ENV = 'testing'
     DEBUG_TB_HOSTS = 'dont-show-debug-toolbar'
+    LOG_LEVEL = logging.DEBUG  # Set log level for testing if needed
     
 
 
