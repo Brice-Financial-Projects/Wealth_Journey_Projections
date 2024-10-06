@@ -11,11 +11,11 @@
     <h2 class="text-3xl font-bold text-black pt-8 self-start">Purpose:</h2>
     <h3 class="text-2xl text-black pt-4">This application uses the Monte Carlo Simulation to model scenarios to project the probability of your retirement "Nest Egg" lasting through your Golden Years.</h3>
     <h2 class="text-3xl font-bold text-black pt-8 self-start">Instructions:</h2>
-    <h3 class="text-2xl text-black pt-4">Below is a form asking for information.  Enter in the information and click submit.  Upon submittal, you will be redirected to a new page that renders the results of the calculation with a chart.  The form has placehold values that will be used if left blank.</h3>
+    <h3 class="text-2xl text-black pt-4">Below is a form asking for information.  Enter in the information and click submit.  Upon submittal, you will be redirected to a new page that renders the results of the calculation with a chart.  The form has placeholder values that will be used if left blank.</h3>
     <h3 class="text-2xl text-black pt-4">Any information provided in this form will only be used in the calculation.  None of the information entered will be saved.</h3>
 </div>
 
-<div id="retire-form" class="flex flex-col items-center min-h-screen bg-purple-400 max-w-3xl mx-auto p-12">
+<div id="retire-form" class="flex flex-col items-center min-h-screen bg-purple-400 max-w-3xl mx-auto p-12 mb-8">
     <section >
         <h2 class="text-3xl font-bold text-black pt-8 self-start">Definitions:</h2> 
         <h3 class="text-2xl text-black font-bold pt-4">Investment Type:</h3>
@@ -36,54 +36,56 @@
             <li><strong>Number of Cases to Run in Model</strong> = The default is 50,000.  The simulation will run this number of simulations to determing the probabilities.  It is recommended to use the default value.</li>
         </ul>
     
-    <form class="w-full space-y-4 pt-8">
+    <form action="/results" method="POST" class="w-full space-y-4 pt-8">
 <!-- Investment Type (Text Input) -->
 <div class="w-full">
-    <label for="investment-type" class="block text-xl font-bold text-black">Investment Type:</label>
-    <input type="text" id="investment-type" name="investment-type" placeholder="stocks, bonds, etc." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="invest_type" class="block text-xl font-bold text-black">Investment Type:</label>
+    <input type="text" id="invest_type" name="invest_type" placeholder="sb_blend" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Start Value (Number Input) -->
 <div class="w-full">
-    <label for="start-value" class="block text-xl font-bold text-black">Start Value:</label>
-    <input type="number" id="start-value" name="start-value" placeholder="2000000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="start_value" class="block text-xl font-bold text-black">Start Value:</label>
+    <input type="number" id="start_value" name="start_value" placeholder="2000000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Annual Withdrawal (Number Input) -->
 <div class="w-full">
-    <label for="annual-withdrawal" class="block text-xl font-bold text-black">Annual Withdrawal:</label>
-    <input type="number" id="annual-withdrawal" name="annual-withdrawal" placeholder="80000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="withdrawal" class="block text-xl font-bold text-black">Annual Withdrawal:</label>
+    <input type="number" id="withdrawal" name="withdrawal" placeholder="80000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Minimum Years in Retirement (Number Input) -->
 <div class="w-full">
-    <label for="min-years" class="block text-xl font-bold text-black">Minimum Years in Retirement:</label>
-    <input type="number" id="min-years" name="min-years" placeholder="18" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="min_years" class="block text-xl font-bold text-black">Minimum Years in Retirement:</label>
+    <input type="number" id="min_years" name="min_years" placeholder="18" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Most Likely Years in Retirement (Number Input) -->
 <div class="w-full">
-    <label for="most-likely-years" class="block text-xl font-bold text-black">Most Likely Years in Retirement:</label>
-    <input type="number" id="most-likely-years" name="most-likely-years" placeholder="25" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="most_likely_years" class="block text-xl font-bold text-black">Most Likely Years in Retirement:</label>
+    <input type="number" id="most_likely_years" name="most_likely_years" placeholder="25" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Maximum Years in Retirement (Number Input) -->
 <div class="w-full">
-    <label for="max-years" class="block text-xl font-bold text-black">Maximum Years in Retirement:</label>
-    <input type="number" id="max-years" name="max-years" placeholder="40" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="max_years" class="block text-xl font-bold text-black">Maximum Years in Retirement:</label>
+    <input type="number" id="max_years" name="max_years" placeholder="40" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Number of Cases to Run (Number Input) -->
 <div class="w-full">
-    <label for="num-cases" class="block text-xl font-bold text-black">Number of Cases to Run in Model:</label>
-    <input type="number" id="num-cases" name="num-cases" placeholder="50000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <label for="num_cases" class="block text-xl font-bold text-black">Number of Cases to Run in Model:</label>
+    <input type="number" id="num_cases" name="num_cases" placeholder="50000" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
 </div>
 
 <!-- Submit Button and Home Link -->
-<div class="w-full flex justify-between items-center">
+<!-- Submit Button and Home Link -->
+<div class="w-full flex justify-between items-center mb-12">
     <button type="submit" class="bg-purple-600 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">Submit</button>
     <a href="#top" class="text-purple-700 text-2xl font-bold hover:underline">Home</a>
 </div>
+
     </form>
     </section>
 </div>

@@ -1,0 +1,21 @@
+{% extends "base.html" %} {%block title%} Wealth Journey Projections {% endblock
+title %} {% block meta_description %}A financial retirement simulation model
+using the Monte Carlo Simulation methodolgy!{% endblock meta_description %} {%
+block content %}
+<body class="bg-purple-400">
+  <div class="mt-20 container mx-auto p-6 bg-purple-400 shadow-md rounded-md">
+    <h1 class="text-3xl font-bold mb-4">Simulation Results</h1>
+
+    <p>
+      <strong>Probability of Running Out of Money:</strong> {{ bankrupt_prob }}%
+    </p>
+    <p><strong>Average Outcome:</strong> ${{ avg_outcome }}</p>
+
+    <h2>Outcome Distribution</h2>
+    <img
+      src="data:image/png;base64,{{ img_data }}"
+      alt="Outcome Distribution"
+    />
+  </div>
+</body>
+{% endblock content %}

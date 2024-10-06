@@ -1,13 +1,11 @@
-from flask import Flask, render_template
-from flask_debugtoolbar import DebugToolbarExtension
-
+from flask import Flask, render_template, request
+# from flask_debugtoolbar import DebugToolbarExtension
+from dotenv import load_dotenv, find_dotenv
+from simulation import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
 from config import DevelopmentConfig
-# import random
-from dotenv import load_dotenv, find_dotenv
 
-
-# load environment variables from the .env file
+# Load environment variables from the .env file
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
@@ -16,28 +14,49 @@ app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 
 # Initialize the debug toolbar
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 @app.route('/')
 def home():
-    """Render the user to the homepage via render template."""
+    """
+    Render the homepage where users can input retirement parameters.
+    """
     return render_template('home.html')
 
-@app.route('/#retire-form')
-def retire_form():
+@app.route('/results', methods=['POST'])
+def results():
     """
-    Render the user to the section of the page to input retirement savings.
-    
-    information.  Section includes:
-        investment type, invest_type
-        start value, start_value
-        annual withdrawal (pre tax in today's dollars), withdrawal
-        minimum number of years in retirement, min_years
-        likely number of years in retirement, most_likely_years
-        maximum number of years in retirement, max_years
-        number of cases to run in model, num_cases
+    Calculate and display the results of the Monte Carlo simulation.
+
+    This route takes user input from the form, runs the simulation using the
+    `calculate_results` function from main.py, and displays the results on
+    the results page.
+
+    Returns:
+        Renders the results page with calculated simulation outcomes.
     """
-    return render_template('home.html')
+    # Get form data and set defaults if fields are left empty
+    invest_type = request.form.get('invest_type', '').strip().lower() or 'sb_blend'
+    start_value = safe_int(request.form.get('start_value', '').strip(), 2000000)
+    withdrawal = safe_int(request.form.get('withdrawal', '').strip(), 80000)
+    min_years = safe_int(request.form.get('min_years', '').strip(), 18)
+    most_likely_years = safe_int(request.form.get('most_likely_years', '').strip(), 25)
+    max_years = safe_int(request.form.get('max_years', '').strip(), 40)
+    num_cases = safe_int(request.form.get('num_cases', '').strip(), 50000)
+
+    # Run calculations using the logic from simulation.py
+    bankrupt_prob, avg_outcome, img_data = calculate_results(
+        invest_type, start_value, withdrawal, min_years,
+        most_likely_years, max_years, num_cases
+    )
+
+    # Render the results page with the calculated data
+    return render_template(
+        'results.html',
+        bankrupt_prob=bankrupt_prob,
+        avg_outcome=avg_outcome,
+        img_data=img_data
+    )
 
 
 if __name__ == "__main__":
