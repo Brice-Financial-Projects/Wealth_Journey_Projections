@@ -3,143 +3,170 @@
 {% block meta_description %}A financial retirement simulation model using the Monte Carlo Simulation methodology!{% endblock meta_description %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
+<div class="container py-5">
     <!-- Hero Section -->
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-secondary-800 mb-4">Welcome to Wealth Journey Projections</h1>
-        <p class="text-xl text-secondary-600 max-w-3xl mx-auto">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-4">Welcome to Wealth Journey Projections</h1>
+        <p class="lead text-secondary">
             Plan your retirement with confidence using our advanced Monte Carlo simulation model.
             Get accurate projections of your retirement savings' longevity based on your specific financial situation.
         </p>
     </div>
 
     <!-- Calculator Section -->
-    <div id="retire-form" class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8 mb-12">
-        <h2 class="text-2xl font-bold text-secondary-800 mb-6">Retirement Calculator</h2>
-        
-        <!-- Investment Type Selection -->
-        <div class="mb-8">
-            <h3 class="text-lg font-semibold text-secondary-700 mb-4">Investment Strategy</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
-                    <input type="radio" name="invest_type" value="stocks" class="mr-2">
-                    <div>
-                        <span class="font-medium">Stocks</span>
-                        <p class="text-sm text-secondary-500">S&P 500</p>
+    <div id="retire-form" class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title h3 mb-4">Retirement Calculator</h2>
+            
+            <form action="/results" method="POST" class="needs-validation" novalidate>
+                <!-- Investment Type Selection -->
+                <div class="mb-4">
+                    <h3 class="h5 mb-3">Investment Strategy</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="radio" name="invest_type" id="stocks" value="stocks">
+                                <label class="form-check-label" for="stocks">
+                                    <span class="fw-medium">Stocks</span>
+                                    <small class="d-block text-muted">S&P 500</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="radio" name="invest_type" id="bonds" value="bonds">
+                                <label class="form-check-label" for="bonds">
+                                    <span class="fw-medium">Bonds</span>
+                                    <small class="d-block text-muted">10-Year Treasury</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="radio" name="invest_type" id="sb_blend" value="sb_blend" checked>
+                                <label class="form-check-label" for="sb_blend">
+                                    <span class="fw-medium">Balanced</span>
+                                    <small class="d-block text-muted">50/50 Stocks/Bonds</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-check p-3 border rounded">
+                                <input class="form-check-input" type="radio" name="invest_type" id="sbc_blend" value="sbc_blend">
+                                <label class="form-check-label" for="sbc_blend">
+                                    <span class="fw-medium">Conservative</span>
+                                    <small class="d-block text-muted">40/50/10 Stocks/Bonds/Cash</small>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </label>
-                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
-                    <input type="radio" name="invest_type" value="bonds" class="mr-2">
-                    <div>
-                        <span class="font-medium">Bonds</span>
-                        <p class="text-sm text-secondary-500">10-Year Treasury</p>
-                    </div>
-                </label>
-                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
-                    <input type="radio" name="invest_type" value="sb_blend" class="mr-2" checked>
-                    <div>
-                        <span class="font-medium">Balanced</span>
-                        <p class="text-sm text-secondary-500">50/50 Stocks/Bonds</p>
-                    </div>
-                </label>
-                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
-                    <input type="radio" name="invest_type" value="sbc_blend" class="mr-2">
-                    <div>
-                        <span class="font-medium">Conservative</span>
-                        <p class="text-sm text-secondary-500">40/50/10 Stocks/Bonds/Cash</p>
-                    </div>
-                </label>
-            </div>
-        </div>
+                </div>
 
-        <!-- Financial Inputs -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="space-y-4">
-                <div>
-                    <label for="start_value" class="block text-sm font-medium text-secondary-700 mb-1">Current Retirement Savings</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">$</span>
-                        <input type="number" id="start_value" name="start_value" placeholder="2,000,000"
-                            class="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                <!-- Financial Inputs -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="start_value" class="form-label">Current Retirement Savings</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="start_value" name="start_value" 
+                                   placeholder="2,000,000" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="withdrawal" class="form-label">Annual Withdrawal</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="withdrawal" name="withdrawal" 
+                                   placeholder="80,000" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="num_cases" class="form-label">Simulation Runs</label>
+                        <input type="number" class="form-control" id="num_cases" name="num_cases" 
+                               placeholder="50,000" required>
                     </div>
                 </div>
-                <div>
-                    <label for="withdrawal" class="block text-sm font-medium text-secondary-700 mb-1">Annual Withdrawal</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-500">$</span>
-                        <input type="number" id="withdrawal" name="withdrawal" placeholder="80,000"
-                            class="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+
+                <!-- Retirement Duration -->
+                <div class="mb-4">
+                    <h3 class="h5 mb-3">Retirement Duration (Years)</h3>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="min_years" class="form-label">Minimum</label>
+                            <input type="number" class="form-control" id="min_years" name="min_years" 
+                                   placeholder="18" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="most_likely_years" class="form-label">Most Likely</label>
+                            <input type="number" class="form-control" id="most_likely_years" name="most_likely_years" 
+                                   placeholder="25" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="max_years" class="form-label">Maximum</label>
+                            <input type="number" class="form-control" id="max_years" name="max_years" 
+                                   placeholder="40" required>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label for="num_cases" class="block text-sm font-medium text-secondary-700 mb-1">Simulation Runs</label>
-                    <input type="number" id="num_cases" name="num_cases" placeholder="50,000"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                </div>
-            </div>
-        </div>
 
-        <!-- Retirement Duration -->
-        <div class="mb-8">
-            <h3 class="text-lg font-semibold text-secondary-700 mb-4">Retirement Duration (Years)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                    <label for="min_years" class="block text-sm font-medium text-secondary-700 mb-1">Minimum</label>
-                    <input type="number" id="min_years" name="min_years" placeholder="18"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-chart-line me-2"></i>Calculate Projections
+                    </button>
                 </div>
-                <div>
-                    <label for="most_likely_years" class="block text-sm font-medium text-secondary-700 mb-1">Most Likely</label>
-                    <input type="number" id="most_likely_years" name="most_likely_years" placeholder="25"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                </div>
-                <div>
-                    <label for="max_years" class="block text-sm font-medium text-secondary-700 mb-1">Maximum</label>
-                    <input type="number" id="max_years" name="max_years" placeholder="40"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                </div>
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="text-center">
-            <button type="submit" class="bg-primary-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
-                <i class="fas fa-chart-line mr-2"></i>Calculate Projections
-            </button>
+            </form>
         </div>
     </div>
 
     <!-- Information Section -->
-    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-secondary-800 mb-6">How It Works</h2>
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-semibold text-secondary-700 mb-2">Monte Carlo Simulation</h3>
-                <p class="text-secondary-600">
-                    Our calculator uses Monte Carlo simulation to model thousands of possible retirement scenarios,
-                    taking into account market volatility and historical returns to provide a comprehensive view
-                    of your retirement outlook.
-                </p>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-secondary-700 mb-2">Investment Strategies</h3>
-                <p class="text-secondary-600">
-                    Choose from different investment strategies to see how they might affect your retirement outcomes.
-                    Each strategy is based on historical market data and real-world performance.
-                </p>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-secondary-700 mb-2">Privacy & Security</h3>
-                <p class="text-secondary-600">
-                    All calculations are performed locally in your browser. We don't store any of your personal
-                    financial information.
-                </p>
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h2 class="card-title h3 mb-4">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h3 class="h5 mb-3">Monte Carlo Simulation</h3>
+                    <p class="text-muted">
+                        Our calculator uses Monte Carlo simulation to model thousands of possible retirement scenarios,
+                        taking into account market volatility and historical returns to provide a comprehensive view
+                        of your retirement outlook.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="h5 mb-3">Investment Strategies</h3>
+                    <p class="text-muted">
+                        Choose from different investment strategies to see how they might affect your retirement outcomes.
+                        Each strategy is based on historical market data and real-world performance.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="h5 mb-3">Privacy & Security</h3>
+                    <p class="text-muted">
+                        All calculations are performed locally in your browser. We don't store any of your personal
+                        financial information.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Form Validation Script -->
+<script>
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
 {% endblock content %}
 
 </body>

@@ -2,9 +2,15 @@ import random
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
+import logging
 
 from io import BytesIO
 import base64
+import os
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def read_to_list(file_name):
     """
@@ -16,25 +22,34 @@ def read_to_list(file_name):
     Returns:
         list: A list of decimal values converted from percentages.
     """
-    with open(file_name) as in_file:
-        lines = [float(line.strip()) for line in in_file]
-        decimal = [round(line / 100, 5) for line in lines]
-        return decimal
+    try:
+        logger.info(f"Attempting to read file: {file_name}")
+        if not os.path.exists(file_name):
+            logger.error(f"File not found: {file_name}")
+            raise FileNotFoundError(f"File not found: {file_name}")
+            
+        with open(file_name) as in_file:
+            lines = [float(line.strip()) for line in in_file]
+            decimal = [round(line / 100, 5) for line in lines]
+            logger.info(f"Successfully read {len(decimal)} values from {file_name}")
+            return decimal
+    except Exception as e:
+        logger.error(f"Error reading file {file_name}: {str(e)}")
+        raise
 
 # Load the data for different asset types and inflation rate
 try:
-    bonds = read_to_list(
-        'text_files/data_files/10-yr_TBond_returns_1926-2013_pct.txt')
-    stocks = read_to_list(
-        'text_files/data_files/SP500_returns_1926-2013_pct.txt')
-    blend_40_50_10 = read_to_list(
-        'text_files/data_files/S-B-C_blend_1926-2013_pct.txt')
-    blend_50_50 = read_to_list(
-        'text_files/data_files/S-B_blend_1926-2013_pct.txt')
-    infl_rate = read_to_list(
-        'text_files/data_files/annual_infl_rate_1926-2013_pct.txt')
-except IOError as e:
-    print(f"Error loading data: {e}")
+    data_dir = 'text_files/data_files'
+    bonds = read_to_list(os.path.join(data_dir, '10-yr_TBond_returns_1926-2013_pct.txt'))
+    stocks = read_to_list(os.path.join(data_dir, 'SP500_returns_1926-2013_pct.txt'))
+    blend_40_50_10 = read_to_list(os.path.join(data_dir, 'S-B-C_blend_1926-2013_pct.txt'))
+    blend_50_50 = read_to_list(os.path.join(data_dir, 'S-B_blend_1926-2013_pct.txt'))
+    infl_rate = read_to_list(os.path.join(data_dir, 'annual_infl_rate_1926-2013_pct.txt'))
+    
+    logger.info("Successfully loaded all data files")
+except Exception as e:
+    logger.error(f"Error loading data files: {str(e)}")
+    raise
 
 # Store the investment type options
 investment_type_args = {
@@ -62,38 +77,44 @@ def montecarlo(returns, start_value, withdrawal, min_years,
     Returns:
         tuple: (list of final outcomes for each case, number of bankruptcies)
     """
-    case_count = 0
-    bankrupt_count = 0
-    outcome = []
+    try:
+        logger.info(f"Starting Monte Carlo simulation with {num_cases} cases")
+        case_count = 0
+        bankrupt_count = 0
+        outcome = []
 
-    while case_count < num_cases:
-        investments = int(start_value)
-        start_year = random.randrange(0, len(returns))
-        duration = int(random.triangular(min_years, max_years,
-                                         most_likely_years))
-        end_year = start_year + duration
-        lifespan = [i for i in range(start_year, end_year)]
-        bankrupt = False
+        while case_count < num_cases:
+            investments = int(start_value)
+            start_year = random.randrange(0, len(returns))
+            duration = int(random.triangular(min_years, max_years,
+                                             most_likely_years))
+            end_year = start_year + duration
+            lifespan = [i for i in range(start_year, end_year)]
+            bankrupt = False
 
-        lifespan_returns = [returns[i % len(returns)] for i in lifespan]
-        lifespan_infl = [infl_rate[i % len(infl_rate)] for i in lifespan]
+            lifespan_returns = [returns[i % len(returns)] for i in lifespan]
+            lifespan_infl = [infl_rate[i % len(infl_rate)] for i in lifespan]
 
-        for index, i in enumerate(lifespan_returns):
-            infl = lifespan_infl[index]
-            withdrawal_infl_adj = withdrawal if index == 0 else int(
-                withdrawal_infl_adj * (1 + infl))
-            investments -= withdrawal_infl_adj
-            investments = int(investments * (1 + i))
+            for index, i in enumerate(lifespan_returns):
+                infl = lifespan_infl[index]
+                withdrawal_infl_adj = withdrawal if index == 0 else int(
+                    withdrawal_infl_adj * (1 + infl))
+                investments -= withdrawal_infl_adj
+                investments = int(investments * (1 + i))
 
-            if investments <= 0:
-                bankrupt = True
-                break
+                if investments <= 0:
+                    bankrupt = True
+                    break
 
-        outcome.append(0 if bankrupt else investments)
-        bankrupt_count += bankrupt
-        case_count += 1
+            outcome.append(0 if bankrupt else investments)
+            bankrupt_count += bankrupt
+            case_count += 1
 
-    return outcome, bankrupt_count
+        logger.info(f"Monte Carlo simulation completed. Bankrupt cases: {bankrupt_count}")
+        return outcome, bankrupt_count
+    except Exception as e:
+        logger.error(f"Error in Monte Carlo simulation: {str(e)}")
+        raise
 
 def plot_outcome(outcome):
     """
@@ -105,19 +126,25 @@ def plot_outcome(outcome):
     Returns:
         str: Base64-encoded image data to be embedded in HTML.
     """
-    plt.figure(figsize=(16, 5))
-    plt.bar(range(1, len(outcome) + 1), outcome, color='black')
-    plt.xlabel('Simulated Lives', fontsize=18)
-    plt.ylabel('$ Remaining', fontsize=18)
-    plt.ticklabel_format(style='plain', axis='y')
+    try:
+        logger.info("Generating outcome plot")
+        plt.figure(figsize=(16, 5))
+        plt.bar(range(1, len(outcome) + 1), outcome, color='black')
+        plt.xlabel('Simulated Lives', fontsize=18)
+        plt.ylabel('$ Remaining', fontsize=18)
+        plt.ticklabel_format(style='plain', axis='y')
 
-    buf = BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    plt.close()
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plt.close()
 
-    img_data = base64.b64encode(buf.read()).decode('utf-8')
-    return img_data
+        img_data = base64.b64encode(buf.read()).decode('utf-8')
+        logger.info("Successfully generated plot")
+        return img_data
+    except Exception as e:
+        logger.error(f"Error generating plot: {str(e)}")
+        raise
 
 def calculate_results(invest_type, start_value, withdrawal, min_years,
                       most_likely_years, max_years, num_cases):
@@ -136,19 +163,27 @@ def calculate_results(invest_type, start_value, withdrawal, min_years,
     Returns:
         tuple: (bankruptcy probability, average outcome, base64 image data)
     """
-    outcome, bankrupt_count = montecarlo(
-        investment_type_args[invest_type], start_value, withdrawal,
-        min_years, most_likely_years, max_years, num_cases
-    )
+    try:
+        logger.info(f"Calculating results for investment type: {invest_type}")
+        if invest_type not in investment_type_args:
+            raise ValueError(f"Invalid investment type: {invest_type}")
 
-    total_cases = len(outcome)
-    bankrupt_prob = round(100 * bankrupt_count / total_cases, 1)
-    avg_outcome = round(sum(outcome) / total_cases, 2)
+        outcome, bankrupt_count = montecarlo(
+            investment_type_args[invest_type], start_value, withdrawal,
+            min_years, most_likely_years, max_years, num_cases
+        )
 
-    img_data = plot_outcome(outcome[:3000])
+        total_cases = len(outcome)
+        bankrupt_prob = round(100 * bankrupt_count / total_cases, 1)
+        avg_outcome = round(sum(outcome) / total_cases, 2)
 
-    return bankrupt_prob, avg_outcome, img_data
+        logger.info(f"Results calculated - Bankruptcy probability: {bankrupt_prob}%, Average outcome: ${avg_outcome}")
 
+        img_data = plot_outcome(outcome[:3000])
+        return bankrupt_prob, avg_outcome, img_data
+    except Exception as e:
+        logger.error(f"Error calculating results: {str(e)}")
+        raise
 
 def safe_int(value, default):
     """
@@ -165,5 +200,6 @@ def safe_int(value, default):
     try:
         return int(value) if value and value.strip() else default
     except ValueError:
+        logger.warning(f"Could not convert '{value}' to integer, using default: {default}")
         return default
 
