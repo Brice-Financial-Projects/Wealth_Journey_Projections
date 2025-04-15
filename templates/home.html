@@ -1,27 +1,27 @@
 {% extends "base.html" %}
-{% block title %} Wealth Journey Projections {% endblock title %}
-{% block meta_description %}A financial retirement simulation model using the Monte Carlo Simulation methodology!{% endblock meta_description %}
+{% block title %}Wealth Journey Projections - Retirement Planning Calculator{% endblock title %}
+{% block meta_description %}Plan your retirement with confidence using our advanced Monte Carlo simulation model. Calculate your retirement savings' longevity and explore different investment strategies.{% endblock meta_description %}
 
 {% block content %}
 <div class="container py-5">
     <!-- Hero Section -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary mb-4">Welcome to Wealth Journey Projections</h1>
+    <section class="text-center mb-5" aria-labelledby="hero-heading">
+        <h1 id="hero-heading" class="display-4 fw-bold text-primary mb-4">Welcome to Wealth Journey Projections</h1>
         <p class="lead text-secondary">
             Plan your retirement with confidence using our advanced Monte Carlo simulation model.
             Get accurate projections of your retirement savings' longevity based on your specific financial situation.
         </p>
-    </div>
+    </section>
 
     <!-- Calculator Section -->
-    <div id="retire-form" class="card shadow-sm mb-5">
+    <section id="retire-form" class="card shadow-sm mb-5" aria-labelledby="calculator-heading">
         <div class="card-body p-4">
-            <h2 class="card-title h3 mb-4">Retirement Calculator</h2>
+            <h2 id="calculator-heading" class="card-title h3 mb-4">Retirement Calculator</h2>
             
             <form action="/results" method="POST" class="needs-validation" novalidate>
                 <!-- Investment Type Selection -->
-                <div class="mb-4">
-                    <h3 class="h5 mb-3">Investment Strategy</h3>
+                <fieldset class="mb-4">
+                    <legend class="h5 mb-3">Investment Strategy</legend>
                     <div class="row g-3">
                         <div class="col-md-6 col-lg-3">
                             <div class="form-check p-3 border rounded">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
 
                 <!-- Financial Inputs -->
                 <div class="row g-3 mb-4">
@@ -69,60 +69,66 @@
                         <div class="input-group">
                             <span class="input-group-text">$</span>
                             <input type="number" class="form-control" id="start_value" name="start_value" 
-                                   placeholder="2,000,000" required>
+                                   placeholder="2,000,000" required min="0" step="1000">
                         </div>
+                        <div class="form-text">Enter your current retirement savings amount</div>
                     </div>
                     <div class="col-md-6">
                         <label for="withdrawal" class="form-label">Annual Withdrawal</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
                             <input type="number" class="form-control" id="withdrawal" name="withdrawal" 
-                                   placeholder="80,000" required>
+                                   placeholder="80,000" required min="0" step="1000">
                         </div>
+                        <div class="form-text">Enter your planned annual withdrawal amount</div>
                     </div>
                     <div class="col-md-6">
                         <label for="num_cases" class="form-label">Simulation Runs</label>
                         <input type="number" class="form-control" id="num_cases" name="num_cases" 
-                               placeholder="50,000" required>
+                               placeholder="50,000" required min="1000" step="1000">
+                        <div class="form-text">Number of simulations to run (higher numbers provide more accurate results)</div>
                     </div>
                 </div>
 
                 <!-- Retirement Duration -->
-                <div class="mb-4">
-                    <h3 class="h5 mb-3">Retirement Duration (Years)</h3>
+                <fieldset class="mb-4">
+                    <legend class="h5 mb-3">Retirement Duration (Years)</legend>
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="min_years" class="form-label">Minimum</label>
                             <input type="number" class="form-control" id="min_years" name="min_years" 
-                                   placeholder="18" required>
+                                   placeholder="18" required min="1" max="100">
+                            <div class="form-text">Shortest expected retirement duration</div>
                         </div>
                         <div class="col-md-4">
                             <label for="most_likely_years" class="form-label">Most Likely</label>
                             <input type="number" class="form-control" id="most_likely_years" name="most_likely_years" 
-                                   placeholder="25" required>
+                                   placeholder="25" required min="1" max="100">
+                            <div class="form-text">Most probable retirement duration</div>
                         </div>
                         <div class="col-md-4">
                             <label for="max_years" class="form-label">Maximum</label>
                             <input type="number" class="form-control" id="max_years" name="max_years" 
-                                   placeholder="40" required>
+                                   placeholder="40" required min="1" max="100">
+                            <div class="form-text">Longest expected retirement duration</div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
 
                 <!-- Submit Button -->
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="fas fa-chart-line me-2"></i>Calculate Projections
+                        <i class="fas fa-chart-line me-2" aria-hidden="true"></i>Calculate Projections
                     </button>
                 </div>
             </form>
         </div>
-    </div>
+    </section>
 
     <!-- Information Section -->
-    <div class="card shadow-sm">
+    <section class="card shadow-sm" aria-labelledby="info-heading">
         <div class="card-body p-4">
-            <h2 class="card-title h3 mb-4">How It Works</h2>
+            <h2 id="info-heading" class="card-title h3 mb-4">How It Works</h2>
             <div class="row g-4">
                 <div class="col-md-4">
                     <h3 class="h5 mb-3">Monte Carlo Simulation</h3>
@@ -148,7 +154,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 
 <!-- Form Validation Script -->
