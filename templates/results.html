@@ -1,21 +1,68 @@
-{% extends "base.html" %} {%block title%} Wealth Journey Projections {% endblock
-title %} {% block meta_description %}A financial retirement simulation model
-using the Monte Carlo Simulation methodolgy!{% endblock meta_description %} {%
-block content %}
-<body class="bg-purple-400">
-  <div class="mt-20 container mx-auto p-6 bg-purple-400 shadow-md rounded-md">
-    <h1 class="text-3xl font-bold mb-4">Simulation Results</h1>
+{% extends "base.html" %}
+{% block title %} Wealth Journey Projections - Results {% endblock title %}
+{% block meta_description %}View your retirement simulation results and projections{% endblock meta_description %}
 
-    <p>
-      <strong>Probability of Running Out of Money:</strong> {{ bankrupt_prob }}%
-    </p>
-    <p><strong>Average Outcome:</strong> ${{ avg_outcome }}</p>
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Results Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-secondary-800 mb-4">Your Retirement Projections</h1>
+            <p class="text-lg text-secondary-600">Based on your inputs and our Monte Carlo simulation</p>
+        </div>
 
-    <h2>Outcome Distribution</h2>
-    <img
-      src="data:image/png;base64,{{ img_data }}"
-      alt="Outcome Distribution"
-    />
-  </div>
-</body>
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-secondary-700">Success Probability</h3>
+                    <span class="text-2xl font-bold text-primary-600">{{ 100 - bankrupt_prob }}%</span>
+                </div>
+                <div class="h-4 bg-secondary-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary-500 rounded-full" style="width: {{ 100 - bankrupt_prob }}%"></div>
+                </div>
+                <p class="text-sm text-secondary-500 mt-2">
+                    The probability that your retirement savings will last throughout your retirement period
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-secondary-700">Average Final Balance</h3>
+                    <span class="text-2xl font-bold text-primary-600">${{ "{:,.2f}".format(avg_outcome) }}</span>
+                </div>
+                <div class="h-4 bg-secondary-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary-500 rounded-full" style="width: 100%"></div>
+                </div>
+                <p class="text-sm text-secondary-500 mt-2">
+                    The average projected balance at the end of your retirement period
+                </p>
+            </div>
+        </div>
+
+        <!-- Distribution Chart -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold text-secondary-800 mb-4">Outcome Distribution</h2>
+            <div class="aspect-w-16 aspect-h-9">
+                <img src="data:image/png;base64,{{ img_data }}" 
+                     alt="Outcome Distribution Chart"
+                     class="w-full h-full object-contain">
+            </div>
+            <p class="text-sm text-secondary-500 mt-4">
+                This chart shows the distribution of possible outcomes from our Monte Carlo simulation.
+                The x-axis represents the final balance, and the y-axis shows the frequency of each outcome.
+            </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                <i class="fas fa-calculator mr-2"></i>Try Different Scenarios
+            </a>
+            <button onclick="window.print()" class="inline-flex items-center justify-center px-6 py-3 border border-secondary-300 text-base font-medium rounded-lg text-secondary-700 bg-white hover:bg-secondary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                <i class="fas fa-print mr-2"></i>Print Results
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock content %}
