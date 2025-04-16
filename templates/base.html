@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta_description %}A financial retirement simulation model using the Monte Carlo Simulation methodology to help you plan your retirement with confidence.{% endblock %}">
-    <meta name="keywords" content="retirement planning, wealth projections, financial planning, Monte Carlo simulation, retirement calculator, investment strategy, retirement savings, nest egg, financial forecast, retirement income">
+    <meta name="description" content="Plan your retirement with confidence. Use our advanced Monte Carlo simulation to forecast your retirement, predict if you'll run out of money, and explore strategies for financial independence.">
+    <meta name="keywords" content="retirement, retirement forecast, retirement ready, retirement prediction, will I run out of money, retirement calculator, retirement planning, Monte Carlo simulation, financial independence, safe withdrawal, retirement income, retirement savings, retirement strategy, retirement portfolio, retirement risk, retirement longevity, retirement security, retirement simulation, retirement analysis, retirement outcomes, retirement projections">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="Wealth Journey Projections">
+    <meta name="author" content="Retire Forecast">
     <meta name="theme-color" content="#0d6efd">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="{% block og_title %}Wealth Journey Projections - Retirement Planning Calculator{% endblock og_title %}" />
-    <meta property="og:description" content="{% block og_description %}Plan your retirement with confidence using our advanced Monte Carlo simulation model. Get accurate projections of your retirement savings' longevity.{% endblock og_description %}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ request.url }}" />
-    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}"/>
-    <meta property="og:image:alt" content="Wealth Journey Projections Retirement Calculator" />
-    <meta property="og:site_name" content="Wealth Journey Projections" />
+    <meta property="og:title" content="Retirement Forecast & Calculator - Will I Run Out of Money?">
+    <meta property="og:description" content="Forecast your retirement with our Monte Carlo simulation. See if your savings will last and get actionable insights for a secure retirement.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.retireforecast.com/">
+    <meta property="og:image" content="https://www.retireforecast.com/static/images/og-image.jpg">
+    <meta property="og:site_name" content="Retire Forecast">
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Choc_Lab_Lover" />
     <meta name="twitter:creator" content="@Choc_Lab_Lover" />
-    <meta name="twitter:title" content="{% block twitter_title %}Wealth Journey Projections - Retirement Planning Calculator{% endblock %}" />
-    <meta name="twitter:description" content="{% block twitter_description %}Plan your retirement with confidence using our advanced Monte Carlo simulation model. Get accurate projections of your retirement savings' longevity.{% endblock twitter_description%}" />
-    <meta name="twitter:image" content="{{ url_for('static', filename='images/twitter-image.jpg', _external=True) }}" />
+    <meta name="twitter:title" content="Retirement Forecast & Calculator - Will I Run Out of Money?">
+    <meta name="twitter:description" content="Forecast your retirement with our Monte Carlo simulation. See if your savings will last and get actionable insights for a secure retirement.">
+    <meta name="twitter:image" content="https://www.retireforecast.com/static/images/twitter-image.jpg">
+    <meta name="twitter:url" content="https://www.retireforecast.com/">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ request.url }}" />
+    <link rel="canonical" href="https://www.retireforecast.com/">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
@@ -44,29 +44,28 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Structured Data -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Wealth Journey Projections",
-        "description": "A financial retirement simulation model using the Monte Carlo Simulation methodology to help you plan your retirement with confidence.",
-        "url": "{{ request.url }}",
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "Wealth Journey Projections"
-        }
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Retire Forecast",
+      "url": "https://www.retireforecast.com/",
+      "description": "Plan your retirement with confidence. Use our advanced Monte Carlo simulation to forecast your retirement, predict if you'll run out of money, and explore strategies for financial independence.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "keywords": [
+        "retirement", "retirement forecast", "retirement ready", "retirement prediction", "will I run out of money", "retirement calculator", "retirement planning", "Monte Carlo simulation", "financial independence", "safe withdrawal", "retirement income", "retirement savings", "retirement strategy", "retirement portfolio", "retirement risk", "retirement longevity", "retirement security", "retirement simulation", "retirement analysis", "retirement outcomes", "retirement projections"
+      ]
     }
     </script>
 
-    <title>{% block title %}Wealth Journey Projections - Retirement Planning Calculator{% endblock %}</title>
+    <title>{% block title %}Retirement Forecast & Calculator - Will I Run Out of Money?{% endblock title %}</title>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
     <header class="bg-white shadow-sm fixed-top" role="banner">

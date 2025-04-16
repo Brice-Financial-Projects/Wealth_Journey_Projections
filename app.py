@@ -6,11 +6,13 @@ from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
 from config import ProductionConfig
 import traceback
+from flask_talisman import Talisman
 
 # Load environment variables from the .env file
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
+Talisman(app, content_security_policy=None)
 
 # Call config files
 app.config.from_object(ProductionConfig)
