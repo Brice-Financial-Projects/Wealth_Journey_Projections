@@ -68,25 +68,25 @@
                         <label for="start_value" class="form-label">Current Retirement Savings</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="start_value" name="start_value" 
-                                   placeholder="2,000,000" required min="0" step="1000">
+                            <input type="text" class="form-control" id="start_value" name="start_value" 
+                                   placeholder="2,000,000" pattern="[0-9,]*" required>
                         </div>
-                        <div class="form-text">Enter your current retirement savings amount</div>
+                        <div class="form-text">Enter your current retirement savings amount (commas allowed)</div>
                     </div>
                     <div class="col-md-6">
                         <label for="withdrawal" class="form-label">Annual Withdrawal</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="withdrawal" name="withdrawal" 
-                                   placeholder="80,000" required min="0" step="1000">
+                            <input type="text" class="form-control" id="withdrawal" name="withdrawal" 
+                                   placeholder="80,000" pattern="[0-9,]*" required>
                         </div>
-                        <div class="form-text">Enter your planned annual withdrawal amount</div>
+                        <div class="form-text">Enter your planned annual withdrawal amount (commas allowed)</div>
                     </div>
                     <div class="col-md-6">
                         <label for="num_cases" class="form-label">Simulation Runs</label>
-                        <input type="number" class="form-control" id="num_cases" name="num_cases" 
-                               placeholder="50,000" required min="1000" step="1000">
-                        <div class="form-text">Number of simulations to run (higher numbers provide more accurate results)</div>
+                        <input type="text" class="form-control" id="num_cases" name="num_cases" 
+                               placeholder="50,000" pattern="[0-9,]*" required>
+                        <div class="form-text">Number of simulations to run (commas allowed)</div>
                     </div>
                 </div>
 
@@ -96,20 +96,20 @@
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="min_years" class="form-label">Minimum</label>
-                            <input type="number" class="form-control" id="min_years" name="min_years" 
-                                   placeholder="18" required min="1" max="100">
+                            <input type="text" class="form-control" id="min_years" name="min_years" 
+                                   placeholder="18" pattern="[0-9,]*" required>
                             <div class="form-text">Shortest expected retirement duration</div>
                         </div>
                         <div class="col-md-4">
                             <label for="most_likely_years" class="form-label">Most Likely</label>
-                            <input type="number" class="form-control" id="most_likely_years" name="most_likely_years" 
-                                   placeholder="25" required min="1" max="100">
+                            <input type="text" class="form-control" id="most_likely_years" name="most_likely_years" 
+                                   placeholder="25" pattern="[0-9,]*" required>
                             <div class="form-text">Most probable retirement duration</div>
                         </div>
                         <div class="col-md-4">
                             <label for="max_years" class="form-label">Maximum</label>
-                            <input type="number" class="form-control" id="max_years" name="max_years" 
-                                   placeholder="40" required min="1" max="100">
+                            <input type="text" class="form-control" id="max_years" name="max_years" 
+                                   placeholder="40" pattern="[0-9,]*" required>
                             <div class="form-text">Longest expected retirement duration</div>
                         </div>
                     </div>
@@ -172,6 +172,28 @@
         }, false)
     })
 })()
+</script>
+
+<!-- Add JavaScript for input formatting -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to format number with commas
+    function formatNumber(input) {
+        // Remove non-numeric characters
+        let value = input.value.replace(/[^\d]/g, '');
+        // Add commas
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        input.value = value;
+    }
+
+    // Add event listeners to all number inputs
+    const numberInputs = document.querySelectorAll('input[pattern="[0-9,]*"]');
+    numberInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            formatNumber(this);
+        });
+    });
+});
 </script>
 {% endblock content %}
 

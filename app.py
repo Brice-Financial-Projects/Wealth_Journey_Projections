@@ -75,6 +75,17 @@ def home():
         return "An error occurred while loading the page. Please try again.", 500
 
 
+def clean_number_input(value):
+    """Convert string with commas to float."""
+    if not value:
+        return 0.0
+    try:
+        # Remove commas and convert to float
+        return float(str(value).replace(',', ''))
+    except ValueError:
+        return 0.0
+
+
 @app.route('/results', methods=['POST'])
 def results():
     """
@@ -92,14 +103,15 @@ def results():
         # Log form data
         logger.info(f"Form data received: {request.form}")
 
-        # Get form data and set defaults if fields are left empty
-        invest_type = request.form.get('invest_type', '').strip().lower() or 'sb_blend'
-        start_value = safe_int(request.form.get('start_value', '').strip(), 2000000)
-        withdrawal = safe_int(request.form.get('withdrawal', '').strip(), 80000)
-        min_years = safe_int(request.form.get('min_years', '').strip(), 18)
-        most_likely_years = safe_int(request.form.get('most_likely_years', '').strip(), 25)
-        max_years = safe_int(request.form.get('max_years', '').strip(), 40)
-        num_cases = safe_int(request.form.get('num_cases', '').strip(), 50000)
+        # Clean and convert all numeric inputs
+        start_value = clean_number_input(request.form.get('start_value', 0))
+        withdrawal = clean_number_input(request.form.get('withdrawal', 0))
+        num_cases = int(clean_number_input(request.form.get('num_cases', 50000)))
+        min_years = int(clean_number_input(request.form.get('min_years', 18)))
+        most_likely_years = int(clean_number_input(request.form.get('most_likely_years', 25)))
+        max_years = int(clean_number_input(request.form.get('max_years', 40)))
+        
+        invest_type = request.form.get('invest_type', 'sb_blend')
 
         # Log processed values
         logger.info(f"Processed values: invest_type={invest_type}, start_value={start_value}, "
