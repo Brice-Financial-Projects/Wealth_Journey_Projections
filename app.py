@@ -7,6 +7,7 @@ from main import calculate_results, safe_int  # Import the simulation logic
 from config import ProductionConfig
 import traceback
 from flask_talisman import Talisman
+from sitemap import sitemap_bp
 
 # Load environment variables from the .env file
 load_dotenv(find_dotenv())
@@ -43,6 +44,9 @@ request_logger.info("Logging system set up correctly.")
 
 # Initialize a global counter (in memory, not persistent across restarts)
 counter = 0
+
+# Register blueprints
+app.register_blueprint(sitemap_bp)
 
 
 @app.before_request
