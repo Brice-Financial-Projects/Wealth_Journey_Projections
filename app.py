@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, send_from_directory 
 # from flask_debugtoolbar import DebugToolbarExtension
 from dotenv import load_dotenv, find_dotenv
 from main import calculate_results, safe_int  # Import the simulation logic
@@ -124,6 +124,10 @@ def results():
     except Exception as e:
         logger.error(f"Error processing results: {str(e)}\n{traceback.format_exc()}")
         return "An error occurred while processing your request. Please try again.", 500
+
+@app.route('/google5ee561638742a290.html')
+def google_verification():
+    return send_from_directory('static', 'google5ee561638742a290.html')
 
 
 if __name__ == "__main__":
