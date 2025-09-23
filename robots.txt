@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.retireforecast.com/sitemap.xml
+
+# Common crawl delays
+Crawl-delay: 1
+
+# Allow crawling of static assets
+Allow: /static/
