@@ -141,6 +141,26 @@ def results():
 def google_verification():
     return send_from_directory('static', 'google5ee561638742a290.html')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    pages = [
+        {"loc": "https://www.retireforecast.com/", "lastmod": "2025-09-23"},
+        {"loc": "https://www.retireforecast.com/about", "lastmod": "2025-09-20"},
+        {"loc": "https://www.retireforecast.com/results", "lastmod": "2025-09-20"},
+    ]
+    return render_template("sitemap.xml.j2", pages=pages), 200, {
+        'Content-Type': 'application/xml'
+    }
+
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+
+@app.route("/contact", methods=["GET"])
+def contact():
+    return render_template("contact.html")
+
 
 if __name__ == "__main__":
     app.run(debug=False)
