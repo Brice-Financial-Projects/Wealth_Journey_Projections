@@ -18,7 +18,7 @@ class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
     DEBUG_TB_INTERCEPT_REDIRECTS = True # Setting this to True will pause form submittals
-    FLASK_ENV = 'development'
+    APP_ENV = 'development'
     USE_RELOADER = True
     LOG_LEVEL = logging.DEBUG
 
@@ -32,13 +32,13 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production Configuration"""
     DEBUG = False
-    FLASK_ENV = 'production'
+    APP_ENV = 'production'
     LOG_LEVEL = logging.WARNING  # Log only warnings and above in production
     
 class TestingConfig(Config):
     """Testing configuration"""
     TESTING = True
-    FLASK_ENV = 'testing'
+    APP_ENV = 'testing'
     DEBUG_TB_HOSTS = 'dont-show-debug-toolbar'
     LOG_LEVEL = logging.DEBUG  # Set log level for testing if needed
     

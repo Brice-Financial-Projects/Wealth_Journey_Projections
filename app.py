@@ -11,9 +11,22 @@ from flask_talisman import Talisman
 from sitemap import sitemap_bp
 
 # Load environment variables from the .env file
-load_dotenv(find_dotenv())
+env_path = find_dotenv()
+loaded = load_dotenv(env_path)
+
+# Strictly honor APP_ENV (defaults to production if missing)
+APP_ENV = os.getenv("APP_ENV", "production").lower()
+
+CONFIG_MAP = {
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+    # "testing": TestingConfig,  # uncomment if you have it
+}
+
+ConfigClass = CONFIG_MAP.get(APP_ENV, ProductionConfig)
 
 app = Flask(__name__)
+app.config.from_object(ConfigClass)
 # Talisman(app, content_security_policy=None)
 # Init Talisman using config-driven flags
 Talisman(
@@ -25,8 +38,8 @@ Talisman(
 )
 
 # Pick config based on .env
-ENVIRONMENT = os.getenv("ENVIRONMENT", "production").lower()
-ConfigClass = DevelopmentConfig if ENVIRONMENT == "development" else ProductionConfig
+APP_ENV = os.getenv("APP_ENV", "production").lower()
+ConfigClass = DevelopmentConfig if APP_ENV == "development" else ProductionConfig
 app.config.from_object(ConfigClass)
 
 # Set up logging to match the configured log level
