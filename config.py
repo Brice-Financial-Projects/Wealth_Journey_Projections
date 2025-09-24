@@ -22,6 +22,12 @@ class DevelopmentConfig(Config):
     USE_RELOADER = True
     LOG_LEVEL = logging.DEBUG
 
+    # Disable HTTPS-only behavior locally
+    FORCE_HTTPS = False
+    SESSION_COOKIE_SECURE = False
+    STRICT_TRANSPORT_SECURITY = False
+    PREFERRED_URL_SCHEME = "http"
+
     
 class ProductionConfig(Config):
     """Production Configuration"""

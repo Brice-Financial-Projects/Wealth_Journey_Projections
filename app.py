@@ -1,10 +1,11 @@
 import logging
+import os
 from flask import Flask, render_template, request, flash, send_from_directory 
 # from flask_debugtoolbar import DebugToolbarExtension
 from dotenv import load_dotenv, find_dotenv
 from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
-from config import ProductionConfig
+from config import ProductionConfig, DevelopmentConfig, TestingConfig
 import traceback
 from flask_talisman import Talisman
 from sitemap import sitemap_bp
@@ -13,10 +14,20 @@ from sitemap import sitemap_bp
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)
+# Talisman(app, content_security_policy=None)
+# Init Talisman using config-driven flags
+Talisman(
+    app,
+    content_security_policy=None,
+    force_https=app.config.get("FORCE_HTTPS", True),
+    session_cookie_secure=app.config.get("SESSION_COOKIE_SECURE", True),
+    strict_transport_security=app.config.get("STRICT_TRANSPORT_SECURITY", True),
+)
 
-# Call config files
-app.config.from_object(ProductionConfig)
+# Pick config based on .env
+ENVIRONMENT = os.getenv("ENVIRONMENT", "production").lower()
+ConfigClass = DevelopmentConfig if ENVIRONMENT == "development" else ProductionConfig
+app.config.from_object(ConfigClass)
 
 # Set up logging to match the configured log level
 logging.basicConfig(level=app.config['LOG_LEVEL'])
