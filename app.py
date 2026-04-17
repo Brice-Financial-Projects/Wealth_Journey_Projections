@@ -1,22 +1,46 @@
 import logging
+import os
 from flask import Flask, render_template, request, flash, send_from_directory 
 # from flask_debugtoolbar import DebugToolbarExtension
 from dotenv import load_dotenv, find_dotenv
 from main import calculate_results, safe_int  # Import the simulation logic
 # DevelopmentConfig, ProductionConfig, TestingConfig
-from config import ProductionConfig
+from config import ProductionConfig, DevelopmentConfig, TestingConfig
 import traceback
 from flask_talisman import Talisman
 from sitemap import sitemap_bp
 
 # Load environment variables from the .env file
-load_dotenv(find_dotenv())
+env_path = find_dotenv()
+loaded = load_dotenv(env_path)
+
+# Strictly honor APP_ENV (defaults to production if missing)
+APP_ENV = os.getenv("APP_ENV", "production").lower()
+
+CONFIG_MAP = {
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+    # "testing": TestingConfig,  # uncomment if you have it
+}
+
+ConfigClass = CONFIG_MAP.get(APP_ENV, ProductionConfig)
 
 app = Flask(__name__)
-Talisman(app, content_security_policy=None)
+app.config.from_object(ConfigClass)
+# Talisman(app, content_security_policy=None)
+# Init Talisman using config-driven flags
+Talisman(
+    app,
+    content_security_policy=None,
+    force_https=app.config.get("FORCE_HTTPS", True),
+    session_cookie_secure=app.config.get("SESSION_COOKIE_SECURE", True),
+    strict_transport_security=app.config.get("STRICT_TRANSPORT_SECURITY", True),
+)
 
-# Call config files
-app.config.from_object(ProductionConfig)
+# Pick config based on .env
+APP_ENV = os.getenv("APP_ENV", "production").lower()
+ConfigClass = DevelopmentConfig if APP_ENV == "development" else ProductionConfig
+app.config.from_object(ConfigClass)
 
 # Set up logging to match the configured log level
 logging.basicConfig(level=app.config['LOG_LEVEL'])
@@ -140,6 +164,26 @@ def results():
 @app.route('/google5ee561638742a290.html')
 def google_verification():
     return send_from_directory('static', 'google5ee561638742a290.html')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    pages = [
+        {"loc": "https://www.retireforecast.com/", "lastmod": "2025-09-23"},
+        {"loc": "https://www.retireforecast.com/about", "lastmod": "2025-09-20"},
+        {"loc": "https://www.retireforecast.com/results", "lastmod": "2025-09-20"},
+    ]
+    return render_template("sitemap.xml.j2", pages=pages), 200, {
+        'Content-Type': 'application/xml'
+    }
+
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+
+@app.route("/contact", methods=["GET"])
+def contact():
+    return render_template("contact.html")
 
 
 if __name__ == "__main__":

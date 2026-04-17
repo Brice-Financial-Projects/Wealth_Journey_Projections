@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}About · Wealth Journey Projections{% endblock title %}
+{% block meta_description %}Learn who built Wealth Journey Projections and the principles behind our retirement Monte Carlo calculator.{% endblock meta_description %}
+
+{% block content %}
+<div class="container py-5">
+  <section class="mb-5" aria-labelledby="about-heading">
+    <h1 id="about-heading" class="display-5 fw-bold text-primary mb-3">About</h1>
+    <p class="lead text-secondary">
+      Wealth Journey Projections is a simple, transparent retirement calculator built to help you
+      explore “what-ifs” with confidence using Monte Carlo simulation.
+    </p>
+  </section>
+
+  <section class="card shadow-sm mb-4" aria-labelledby="who-heading">
+    <div class="card-body p-4">
+      <h2 id="who-heading" class="h4 mb-3">Who’s behind it</h2>
+      <p class="text-muted mb-3">
+        Hi, I’m <strong>Brice</strong> — a backend/Python developer and longtime civil engineer. I built this tool
+        to make retirement math feel <em>honest, explainable, and fast</em>.
+      </p>
+      <ul class="list-unstyled">
+        <li class="mb-2">
+          <i class="fas fa-user-gear me-2" aria-hidden="true"></i>
+          Portfolio: <a href="https://www.devbybrice.com" rel="me noopener">devbybrice.com</a>
+        </li>
+        <li class="mb-2">
+          <i class="fab fa-github me-2" aria-hidden="true"></i>
+          GitHub: <a href="https://github.com/Brice-Backend-Projects" rel="noopener">Brice-Backend-Projects</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card shadow-sm mb-4" aria-labelledby="principles-heading">
+    <div class="card-body p-4">
+      <h2 id="principles-heading" class="h4 mb-3">What guides the tool</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h3 class="h6">Clarity over hype</h3>
+          <p class="text-muted mb-0">Plain language and transparent assumptions. No black boxes.</p>
+        </div>
+        <div class="col-md-4">
+          <h3 class="h6">Useful defaults</h3>
+          <p class="text-muted mb-0">Sensible presets you can tweak to match your situation.</p>
+        </div>
+        <div class="col-md-4">
+          <h3 class="h6">Respect for privacy</h3>
+          <p class="text-muted mb-0">Inputs are processed for your session; no personal data hoarding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card shadow-sm" aria-labelledby="disclaimer-heading">
+    <div class="card-body p-4">
+      <h2 id="disclaimer-heading" class="h4 mb-3">Disclaimer</h2>
+      <p class="text-muted mb-0">
+        Wealth Journey Projections is an educational tool and does not provide financial, legal,
+        or tax advice. Markets are uncertain; results are estimates, not guarantees.
+      </p>
+    </div>
+  </section>
+</div>
+{% endblock content %}
