@@ -37,11 +37,6 @@ Talisman(
     strict_transport_security=app.config.get("STRICT_TRANSPORT_SECURITY", True),
 )
 
-# Pick config based on .env
-APP_ENV = os.getenv("APP_ENV", "production").lower()
-ConfigClass = DevelopmentConfig if APP_ENV == "development" else ProductionConfig
-app.config.from_object(ConfigClass)
-
 # Set up logging to match the configured log level
 logging.basicConfig(level=app.config['LOG_LEVEL'])
 logger = logging.getLogger(__name__)
